@@ -1,5 +1,1 @@
-streamlit
-pandas
-altair
-scikit-learn
-requests
+pip install streamlit pandas altair scikit-learn requests
