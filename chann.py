@@ -16,8 +16,8 @@ YOUTUBE_CHANNEL_URL  = "https://www.googleapis.com/youtube/v3/channels"
 API_KEY = "AIzaSyAeMNLtJxQwsIlk8Z99TyrC9Xvo6DRDbf8"  # Replace with your actual API key
 
 # Streamlit setup
-st.set_page_config(page_title="Find Similar Channels", layout="wide")
-st.title("🔍 Find Similar YouTube Channels")
+st.set_page_config(page_title="Niche Channel Finder", layout="wide")
+st.title("🔍 Discover Niche YouTube Channels")
 
 # Cache wrapper
 @lru_cache(maxsize=128)
@@ -94,8 +94,10 @@ def suggest_similar_channels(df: pd.DataFrame) -> pd.DataFrame:
 
 # UI
 channel_name = st.text_input("Enter a Channel Name")
+max_subs = st.slider("Max Subscribers", 100, 10000, value=1000, step=100)
+min_views = st.slider("Min Views per Video", 1000, 1000000, value=5000, step=1000)
 
-if st.button("Find Similar Channels"):
+if st.button("Find Niche Creators"):
     with st.spinner("Analyzing channel…"):
         # Step 1: Search for channel
         search_params = {
@@ -134,6 +136,8 @@ if st.button("Find Similar Channels"):
 
         # Step 4: Fetch videos using keywords
         df = get_results(keywords, API_KEY)
+        df = df[df["Subscribers"] <= max_subs]
+        df = df[df["Views"] >= min_views]
         df = suggest_similar_channels(df)
         df = df.sort_values(by="Views", ascending=False).head(10)
 
@@ -142,6 +146,7 @@ if st.button("Find Similar Channels"):
             st.markdown(
                 f"- **{row['Channel']}**  \n"
                 f"  • Subscribers: {row['Subscribers']:,}  \n"
+                f"  • Views: {row['Views']:,}  \n"
                 f"  • [Visit Channel 👤]({row['ChannelURL']})"
             )
 
