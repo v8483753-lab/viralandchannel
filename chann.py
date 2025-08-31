@@ -13,7 +13,7 @@ YOUTUBE_VIDEO_URL    = "https://www.googleapis.com/youtube/v3/videos"
 YOUTUBE_CHANNEL_URL  = "https://www.googleapis.com/youtube/v3/channels"
 
 # Your API Key
-API_KEY = "YOUR_API_KEY_HERE"  # Replace with your actual API key
+API_KEY = "AIzaSyAeMNLtJxQwsIlk8Z99TyrC9Xvo6DRDbf8"  # Replace with your actual API key
 
 # Streamlit setup
 st.set_page_config(page_title="Find Similar Channels", layout="wide")
